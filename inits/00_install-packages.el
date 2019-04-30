@@ -2,9 +2,6 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; パッケージ情報の更新
-(package-refresh-contents)
-
 ;; インストールするパッケージ
 (defvar my/favorite-packages
   '(yatex
@@ -30,4 +27,10 @@
 ;; my/favorite-packagesからインストールしていないパッケージをインストール
 (dolist (package my/favorite-packages)
   (unless (package-installed-p package)
-    (package-install package)))
+	(progn
+	  ;; パッケージ情報の更新
+	  (package-refresh-contents)
+      (package-install package)
+	  )
+	)
+  )
